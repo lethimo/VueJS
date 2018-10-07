@@ -37,6 +37,16 @@
           </tr>
         </tbody>        
       </table>
+
+      <!--Bootstrap style for form-->
+      <div class="form-group m-2">
+        <label>New Item: </label>
+        <input v-model="newItemText" class="form-control" type="text"/>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" v-on:click="addNewToDo"> Add </button>
+      </div>
+
   </div>
 </template>
 
@@ -59,10 +69,18 @@ export default{
       tasks:[{action:"Buy flowers", done:false},
       {action:"Buy flowers", done:false},
       {action:"Buy flowers", done:false},
-      {action:"Buy flowers", done:false},
-      {action:"Buy flowers", done:false},
-
-      ]
+      {action:"rau má", done:false},
+      {action:"Đậu xanh", done:false}],
+      newItemText:""
+    }
+  },
+  methods:{
+    addNewToDo(){
+      this.tasks.push({
+        action:this.newItemText,
+        done:false
+      });
+      this.newItemText= "";
     }
   }
 }
