@@ -6,7 +6,7 @@
   </div>
 </template>
 -->
-
+<!-- bootstrap style and vue
 <template>
   <div>
     <h4 class="bg-primary text-while text-center p-2">Adam's To Do list</h4>
@@ -22,7 +22,25 @@
     </div>
   </div>
 </template>
+-->
+<template>
+  <div>
+    <h4 class="bg-primary text-while text-center p-2">Adam's To Do list</h4>
+     <table class="table table-striped table-bordered table-sm">
+        <thead>
+          <tr><th>Task</th><th>Done</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="t in tasks" v-bind:key="t.action">
+            <td>{{t.action}}</td>
+            <td>{{t.done}}</td>
+          </tr>
+        </tbody>        
+      </table>
+  </div>
+</template>
 
+<!--.................SCRIPT.................................................-->
 <!-- helloworld script
 <script>
 import HelloWorld from './components/HelloWorld.vue'
