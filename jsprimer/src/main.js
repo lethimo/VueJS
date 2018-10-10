@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 // import App from './App.vue'
-
+//import additionFunction from "./maths/sum";
+import additionFunction from "@/maths/sum";
 // Vue.config.productionTip = false
 
 // new Vue({
@@ -27,25 +28,29 @@ MyFunc("Mo", "22");
 // printname(function() { return "Mo" }, console.log);
 
 //con tro ham
-
 const myfunction = (name) => ("Hello" + name() + "abc");
 const printname = (name, pr) => pr(myfunction(name))
-
 printname(function() { return "Mo" }, console.log);
 
+
+//array
 let products = [
-    { name: "Hat", price: 24.5, stock: 10 },
-    { name: "Kayak", price: 289.99, stock: 1 },
+    { name: "Hat", price: 2, stock: 10 },
+    { name: "Kayak", price: 3, stock: 1 },
     { name: "Soccer Ball", price: 10, stock: 0 },
-    { name: "Running Shoes", price: 116.5, stock: 20 },
+    { name: "Running Shoes", price: 1, stock: 20 },
 ]
 let totalValue = products
-    .filter(item => item.stock > 0)
-    .reduce((prev, item) => prev + (item.price * item.stock), 0);
-
+    .filter(item => item.stock > 0) //lọc những products có số lượng >0. 
+    .reduce((prev, item) => prev + (item.price * item.stock), 0); // tính tổng tiền cảu item, trả về biến prve = 4300
 console.log(`Total value: $${totalValue.toFixed(2)}`);
 
-//object myData
+//su dung module sum de tinh tong array
+let values = [10, 20, 30, 40, 50];
+let total = additionFunction(values);
+console.log(`Total values: ${total}`);
+
+// khoi tao object myData
 let myData = {
     name: "MoMeo",
     age: 22,
@@ -55,8 +60,8 @@ let myData = {
         console.log(`Hom nay la mot ngay ${myData.weather}`);
     }
 };
-//Ham coppy object
 
+//Ham coppy object
 let coppyObject = {}; //Khoi tao object rong
 Object.assign(coppyObject, myData); // coppy noi dung tu object myData sang coppyObject
 coppyObject.printMesage(); //coppyObject duoc su dung phuong thuc printMesage()
