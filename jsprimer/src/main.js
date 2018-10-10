@@ -44,3 +44,19 @@ let totalValue = products
     .reduce((prev, item) => prev + (item.price * item.stock), 0);
 
 console.log(`Total value: $${totalValue.toFixed(2)}`);
+
+//object myData
+let myData = {
+    name: "MoMeo",
+    age: 22,
+    weather: "sunny",
+    printMesage() {
+        console.log(`Toi la ${myData.name} `);
+        console.log(`Hom nay la mot ngay ${myData.weather}`);
+    }
+};
+//Ham coppy object
+
+let coppyObject = {}; //Khoi tao object rong
+Object.assign(coppyObject, myData); // coppy noi dung tu object myData sang coppyObject
+coppyObject.printMesage(); //coppyObject duoc su dung phuong thuc printMesage()
