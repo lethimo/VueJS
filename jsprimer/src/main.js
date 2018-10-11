@@ -1,8 +1,9 @@
 // import Vue from 'vue'
 // import App from './App.vue'
 import { additionFunction } from "./maths/sum";
-import { subtract, multiply, sum } from "./maths/operation";
-
+import * as math from "./maths";
+//import { subtract, multiply, sum } from "./maths/operation";
+import * as ops from "./maths/operation";
 //import additionFunction from "@/maths/sum";  same
 // Vue.config.productionTip = false
 
@@ -52,10 +53,16 @@ let values = [10, 20, 30, 40, 50];
 // let total = additionFunction(values);
 // console.log(`Total values: ${total}`);
 
+////nhieu funstion
 //console.log(`Sum = ${additionFunction(values)}`);
-console.log(`Sum = ${sum(values)}`);
-console.log(`Mul = ${multiply(values)}`);
-console.log(`Sub = ${subtract(1000,values)}`);
+// console.log(`Sum = ${sum(values)}`);
+// console.log(`Mul = ${multiply(values)}`);
+// console.log(`Sub = ${subtract(1000,values)}`);
+////gom nhom nhieu fuction ve ops
+console.log(`Sum1 = ${ops.sum(values)}`);
+console.log(`Mul1 = ${ops.multiply(values)}`);
+console.log(`Sub1 = ${ops.subtract(1000,values)}`);
+
 // khoi tao object myData
 let myData = {
     name: "MoMeo",
