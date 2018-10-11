@@ -1,6 +1,6 @@
-//create
-export default function(values) {
+//create module sum
+export function additionFunction(values) {
     return values.reduce((total, val) => total + val, 0)
 }
 
-//import vao main.js
+//import module sum vao main.js

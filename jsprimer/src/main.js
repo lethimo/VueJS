@@ -1,7 +1,9 @@
 // import Vue from 'vue'
 // import App from './App.vue'
-//import additionFunction from "./maths/sum";
-import additionFunction from "@/maths/sum";
+import { additionFunction } from "./maths/sum";
+import { subtract, multiply, sum } from "./maths/operation";
+
+//import additionFunction from "@/maths/sum";  same
 // Vue.config.productionTip = false
 
 // new Vue({
@@ -47,9 +49,13 @@ console.log(`Total value: $${totalValue.toFixed(2)}`);
 
 //su dung module sum de tinh tong array
 let values = [10, 20, 30, 40, 50];
-let total = additionFunction(values);
-console.log(`Total values: ${total}`);
+// let total = additionFunction(values);
+// console.log(`Total values: ${total}`);
 
+//console.log(`Sum = ${additionFunction(values)}`);
+console.log(`Sum = ${sum(values)}`);
+console.log(`Mul = ${multiply(values)}`);
+console.log(`Sub = ${subtract(1000,values)}`);
 // khoi tao object myData
 let myData = {
     name: "MoMeo",
