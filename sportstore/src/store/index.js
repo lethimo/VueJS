@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 const testData = [];
-for (let i = 1; i <= 10; i++) {
+for (let i = 1; i <= 20; i++) {
     testData.push({
         id: i,
         name: `Product#${i}`,
@@ -19,7 +19,7 @@ export default new Vuex.Store({
         products: testData,
         productsTotal: testData.length,
         currentPage: 1,
-        pageSize: 3
+        pageSize: 5
             //phan trang
     },
     getters: {
