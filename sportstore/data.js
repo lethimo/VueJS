@@ -66,7 +66,7 @@ var data = [{
 module.exports = function() {
     return {
         products: data,
-        category: [...new Set(data.map(p => p.category))].sort(),
-        order: []
+        categories: [...new Set(data.map(p => p.category))].sort(),
+        orders: []
     }
 }
