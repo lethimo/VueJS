@@ -9,7 +9,7 @@ export default {
     },
     mutations: {
         addProduct(state, product) {
-            let line = state.line.find(line => line.product.id == product.id);
+            let line = state.lines.find(line => line.product.id == product.id);
             if (line != null) {
                 line.quantity++;
             } else {
@@ -24,6 +24,29 @@ export default {
             if (index > -1) {
                 state.lines.splice(index, 1);
             }
+        },
+        setCartData(state, data) { //hàm set giỏ hàng
+            state.lines = data;
+        }
+    },
+    actions: {
+        loadCartData(context) {
+            let data = localStorage.getItem("cart");
+            if (data != null) {
+                context.commit("setCartData", JSON.parse(data));
+            }
+        },
+        storeCartData(context) {
+            localStorage.setItem("cart", JSON.stringify(context.state.lines));
+        },
+        clearCartData(context) {
+            context.commit("setCartData", []); //xóa giỏi hàng, set data = [];
+        },
+        initializeCart(context, store) {
+            context.dispatch("loadCartData"); //khoi tao gio hang
+            store.watch(state => state.cart.lines,
+                () => context.dispatch("storeCartData"), { deep: true });
+
         }
     }
 }
