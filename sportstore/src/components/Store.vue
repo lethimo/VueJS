@@ -8,9 +8,11 @@
         </div>
         <div class="row">
             <div class="col-3 bg-info p-2">
-                <CategoryControls />
+                <CategoryControls class="mb-5" />
+                <button class="btn btn-block btn-warning mt-5" v-on:click="setShowSearch(true)">Search</button>
             </div>
             <div class="col-9 p-2">
+                <Search />   
                 <product-list />
             </div>
         </div>
@@ -21,10 +23,16 @@
 import ProductList from "./ProductList";  //danh sach san pham
 import CategoryControls from './CategoryControls';   //phan trang
 import CartSummary from './CartSummary';   //icon gio hang
+import {mapMutations} from "vuex";   //vì component Search sử dụng thư viện mapMutation nên phải import kèm vào
+import Search from './Search';   
 
 export default{
     components:{
-        ProductList,CategoryControls,CartSummary
+        ProductList,CategoryControls,CartSummary,Search
+    },
+    methods:{
+        ...mapMutations(["setShowSearch"])
+
     }
 }
 </script>
