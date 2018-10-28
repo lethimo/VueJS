@@ -8,12 +8,12 @@
         </div>
     </div>
     <div class="m-2">
-            <div class="form-group m-2">
-                <label>Name</label>
-                <input v-model="$v.order.name.$model" class="form-control"/>
-                <validation-error v-bind:validation="$v.order.name"/>
-            </div>
+        <div class="form-group m-2">
+            <label>Name</label>
+            <input v-model="$v.order.name.$model" class="form-control"/>
+            <validation-error v-bind:validation="$v.order.name"/>
         </div>
+    </div>
         <div class="m-2">
             <div class="form-group m-2">
                 <label> Email</label>
@@ -46,7 +46,7 @@
             <router-link to ="/cart" class="btn btn-secondary m-1">
                 Back
             </router-link>
-            <button class="btn btn-primary m-1" v-on:click="submitOrder"> Place Order</button>
+            <button class="btn btn-primary m-1" v-on:click="submitOrder"> Place Order </button>
         </div>
     </div>
 </template>
@@ -59,11 +59,13 @@ export default {
     components:{ValidationError},
     data: function(){
         return{
-            name: null,
-            email: null,
-            address: null,
-            city: null,
-            zip: null
+            order:{
+                name: null,
+                email: null,
+                address: null,
+                city: null,
+                zip: null
+            }
         }
     },
     validations:{
@@ -87,7 +89,7 @@ export default {
             if(!this.$v.$invalid){
                 let order = await this.storeOrder(this.order);
                 this.clearCart();
-                this.$router.push(`/thanks/${order}`);
+               this.$router.push(`/thanks/#${order}`);
             }
         }
     }
