@@ -4,8 +4,11 @@ export default {
         lines: []
     },
     getters: {
-        itemCount: state => state.lines.reduce((total, line) => total + line.quantity, 0),
-        totalPrice: state => state.lines.reduce((total, line) => total + (line.quantity * line.product.price), 0),
+        itemCount: state => state.lines.reduce((total, line) =>
+            total + line.quantity, 0),
+        totalPrice: state => state.lines.reduce((total, line) =>
+            total + (line.quantity * line.product.price), 0),
+
     },
     mutations: {
         addProduct(state, product) {
@@ -25,7 +28,7 @@ export default {
                 state.lines.splice(index, 1);
             }
         },
-        setCartData(state, data) { //hàm set giỏ hàng
+        setCartData(state, data) {
             state.lines = data;
         }
     },
@@ -40,13 +43,12 @@ export default {
             localStorage.setItem("cart", JSON.stringify(context.state.lines));
         },
         clearCartData(context) {
-            context.commit("setCartData", []); //xóa giỏi hàng, set data = [];
+            context.commit("setCartData", []);
         },
         initializeCart(context, store) {
-            context.dispatch("loadCartData"); //khoi tao gio hang
+            context.dispatch("loadCartData");
             store.watch(state => state.cart.lines,
                 () => context.dispatch("storeCartData"), { deep: true });
-
         }
     }
 }

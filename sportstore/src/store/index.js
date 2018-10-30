@@ -3,22 +3,25 @@ import Vuex from "vuex";
 import Axios from "axios";
 import CartModule from "./cart";
 import OrdersModule from "./orders";
+import AuthModule from "./auth";
+
 Vue.use(Vuex);
+
 const baseUrl = "http://localhost:3500";
 const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 export default new Vuex.Store({
     strict: true,
-    modules: { cart: CartModule, orders: OrdersModule },
+    modules: { cart: CartModule, orders: OrdersModule, auth: AuthModule },
     state: {
         categoriesData: [],
         currentPage: 1,
-        pageSize: 4, //size phan trang
+        pageSize: 4,
         currentCategory: "All",
         pages: [],
         serverPageCount: 0,
-        searchTerm: "", //Tìm kiếm
+        searchTerm: "",
         showSearch: false
     },
     getters: {
@@ -26,9 +29,11 @@ export default new Vuex.Store({
             return state.pages[state.currentPage];
         },
         pageCount: (state) => state.serverPageCount,
-        categories: state => ["All", ...state.categoriesData]
+        categories: state => ["All", ...state.categoriesData],
+        productById: (state) => (id) => {
+            return state.pages[state.currentPage].find(p => pid == id);
+        }
     },
-    //mutations: Đột biến, sự chuyển đổi
     mutations: {
         _setCurrentPage(state, page) {
             state.currentPage = page;
@@ -41,15 +46,11 @@ export default new Vuex.Store({
             state.currentCategory = category;
             state.currentPage = 1;
         },
-
-        /* setData(state, data) {
-             state.products = data.pdata;
-             state.productsTotal = data.pdata.length;
-             state.categoriesData = data.cdata.sort();
-        },*/
         addPage(state, page) {
             for (let i = 0; i < page.pageCount; i++) {
-                Vue.set(state.pages, page.number + i, page.data.slice(i * state.pageSize, (i * state.pageSize) + state.pageSize));
+                Vue.set(state.pages, page.number + i,
+                    page.data.slice(i * state.pageSize,
+                        (i * state.pageSize) + state.pageSize));
             }
         },
         clearPages(state) {
@@ -66,27 +67,41 @@ export default new Vuex.Store({
         },
         setSearchTerm(state, term) {
             state.searchTerm = term;
-            state.currentPage = 1; //tim kiem duoc thi tra ve trang so 1
+            state.currentPage = 1;
+        },
+        _addProduct(state, product) {
+            state.pages[state.currentPage].unshift(product);
+        },
+        _updateProduct(state, product) {
+            let page = state.pages[state.currentPage];
+            let index = page.findIndex(p => p.id == product.id);
+            Vue.set(page, index, product);
         }
     },
-    //action: Hành động
     actions: {
         async getData(context) {
             await context.dispatch("getPage", 2);
             context.commit("setCategories", (await Axios.get(categoriesUrl)).data);
         },
         async getPage(context, getPageCount = 1) {
-            let url = `${productsUrl}?_page=${context.state.currentPage}` + `&_limit =${context.state.pageSize * getPageCount}`;
+            let url = `${productsUrl}?_page=${context.state.currentPage}` +
+                `&_limit=${context.state.pageSize * getPageCount}`;
+
             if (context.state.currentCategory != "All") {
                 url += `&category=${context.state.currentCategory}`;
             }
-            //tim kiem
+
             if (context.state.searchTerm != "") {
                 url += `&q=${context.state.searchTerm}`;
             }
+
             let response = await Axios.get(url);
             context.commit("setPageCount", response.headers["x-total-count"]);
-            context.commit("addPage", { number: context.state.currentPage, data: response.data, pageCount: getPageCount });
+            context.commit("addPage", {
+                number: context.state.currentPage,
+                data: response.data,
+                pageCount: getPageCount
+            });
         },
         setCurrentPage(context, page) {
             context.commit("_setCurrentPage", page);
@@ -95,13 +110,12 @@ export default new Vuex.Store({
             }
         },
         setPageSize(context, size) {
-            context.commit("clearPages")
+            context.commit("clearPages");
             context.commit("_setPageSize", size);
             context.dispatch("getPage", 2);
         },
         setCurrentCategory(context, category) {
             context.commit("clearPages");
-
             context.commit("_setCurrentCategory", category);
             context.dispatch("getPage", 2);
         },
@@ -114,6 +128,20 @@ export default new Vuex.Store({
             context.commit("setSearchTerm", "");
             context.commit("clearPages");
             context.dispatch("getPage", 2);
+        },
+        async addProduct(context, product) {
+            let data = (await context.getters.authenticatedAxios.post(productsUrl, product)).data;
+            product.id = data.id;
+            this.commit("_addProduct", product);
+        },
+        async removeProduct(context, product) {
+            await context.getters.authenticatedAxios.delete(`${productUrl}/${product.id}`);
+            context.commit("clearPages");
+            context.dispatch("getPage", 1);
+        },
+        async updateProduct(context, product) {
+            await context.getters.authenticatedAxios.put(`${productUrl}/${product.id}`, product);
+            this.commit("_updateproduct", product)
         }
     }
 })
