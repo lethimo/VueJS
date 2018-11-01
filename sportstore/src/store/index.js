@@ -7,12 +7,13 @@ import AuthModule from "./auth";
 
 Vue.use(Vuex);
 
-const baseUrl = "http://localhost:3500";
+//const baseUrl = "http://localhost:3500";
+const baseUrl = "/api"
 const productsUrl = `${baseUrl}/products`;
 const categoriesUrl = `${baseUrl}/categories`;
 
 export default new Vuex.Store({
-    strict: true,
+    strict: false,
     modules: { cart: CartModule, orders: OrdersModule, auth: AuthModule },
     state: {
         categoriesData: [],

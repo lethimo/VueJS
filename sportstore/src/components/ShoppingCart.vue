@@ -1,9 +1,9 @@
 <template>
    <div class="container-fluid">
        <div class="row">
-       <div class="col bg-dark text-white">
-           <a class="navbar-barand">SPORT STORE</a>
-       </div>
+            <div class="col bg-dark text-white">
+                <a class ="navbar-barand">SPORT STORE </a>
+            </div>
        </div>
        <div class="row">
            <div class="col mt-2">
