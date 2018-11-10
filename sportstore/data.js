@@ -19,7 +19,7 @@ for (let i = 1; i < 500; i++) { //500 category, 100 seed => 1 seed = 5 category
 module.exports = function() {
     return {
         products: data,
-        //categories: [...new Set(data.map(p => p.category))].sort(),
+        categories: [...new Set(data.map(p => p.category))].sort(),
         categories: categories,
         orders: []
     }
